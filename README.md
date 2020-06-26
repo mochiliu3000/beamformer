@@ -6,4 +6,4 @@ jupyter lab --port 80 --allow-root --ip=10.142.0.2 --no-browser
 
 
 ### Work on the notebook
-http://34.75.196.171/?token=ce1b58287eaef2a8674fef8c83958cffa8a80c07c7947634
+http://35.196.172.178/?token=10ec7542027281ade8d95092eb6ab2de654fc5324da0399c
