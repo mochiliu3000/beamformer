@@ -1,0 +1,4 @@
+CRITICAL:root:cov_data_1: window_size=3600, window_step=720, subset_size=3, avg_imp=0.033175929825835636
+CRITICAL:root:cov_data_1: window_size=1800, window_step=360, subset_size=3, avg_imp=-0.27850751077084535
+CRITICAL:root:cov_data_1: window_size=1200, window_step=120, subset_size=3, avg_imp=-0.32724359773422756
+CRITICAL:root:cov_data_1: window_size=600, window_step=60, subset_size=3, avg_imp=-0.43668842162008986
