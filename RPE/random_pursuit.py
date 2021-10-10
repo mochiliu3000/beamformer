@@ -50,9 +50,9 @@ def random_pursuit(data_x, data_y, threshold, inx_h, l_inx, N, inx_p = -1, n_pre
         percent_value: Float, max percentage for weight recaculation.
         method: String, 'inverse' or 'softmax', how weights are calculated from losses
     # Returns
-        pred: Prediction value for the data point you sepecified.
-        forward_loss: Prediction forward L2 loss.
-        backward_loss: Prediction backward L2 loss.
+        pred: Prediction value for the data point you specified.
+        alert_idxs: The indexes of the alerted data points.
+        data_y_copy: The refined series of y value.
     # Raises
         ValueError: Input error OR calculation error.
     """
@@ -215,7 +215,7 @@ def random_pursuit(data_x, data_y, threshold, inx_h, l_inx, N, inx_p = -1, n_pre
 
     # Close the pool
     pool.close()
-    return pred_results, alert_idxs
+    return pred_results, alert_idxs, data_y_copy
 
 
 # In[5]:
