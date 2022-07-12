@@ -88,6 +88,7 @@ def random_pursuit(data_x, data_y, threshold, inx_h, l_inx, N, inx_p = -1, n_pre
     reg_results = []
     pred_results = {}
     alert_idxs = []
+    real_jumps = set()
     
     data_y_copy = copy.deepcopy(data_y) # As we may need to replace some values in data_y, deep copy it first
 
@@ -141,7 +142,15 @@ def random_pursuit(data_x, data_y, threshold, inx_h, l_inx, N, inx_p = -1, n_pre
                 data_y_copy[inx_p] = pred
                 idx_alert = inx_p - l_inx
                 alert_idxs.append(idx_alert)
-                print("ALERT - Data at index %s has exceeded threshold" % idx_alert)
+                # print("ALERT - Data at index %s has exceeded threshold" % idx_alert)
+            
+            # Record real jump point
+            data_y_this_loop = data_y[history_inx]
+            real_jumps_this_loop = np.array(history_inx)[np.abs(data_y_this_loop - np.mean(data_y_this_loop)) >= threshold]
+            if len(real_jumps_this_loop) > 0:
+                # print("REAL - Data at index %s has exceeded threshold" % list(real_jumps_this_loop))
+                real_jumps.update(list(real_jumps_this_loop))
+                
 
         else: # Window slides, re-calculate forward_losses, weights and pred
             # 1. Check if there are history data available for new iteration
@@ -206,7 +215,15 @@ def random_pursuit(data_x, data_y, threshold, inx_h, l_inx, N, inx_p = -1, n_pre
                 data_y_copy[inx_p] = pred
                 idx_alert = inx_p - l_inx
                 alert_idxs.append(idx_alert)
-                print("ALERT - Data at index %s has exceeded threshold" % idx_alert)
+                # print("ALERT - Data at index %s has exceeded threshold" % idx_alert)
+            
+            # Record real jump point
+            new_history_inx = list(range(inx_h - l_inx + 1, inx_h + 1))
+            data_y_this_loop = data_y[new_history_inx]
+            real_jumps_this_loop = np.array(new_history_inx)[np.abs(data_y_this_loop - np.mean(data_y_this_loop)) >= threshold]
+            if len(real_jumps_this_loop) > 0:
+                # print("REAL - Data at index %s has exceeded threshold" % list(real_jumps_this_loop))
+                real_jumps.update(list(real_jumps_this_loop))
                 
         # Update iterators
         inx_h += 1
@@ -215,7 +232,7 @@ def random_pursuit(data_x, data_y, threshold, inx_h, l_inx, N, inx_p = -1, n_pre
 
     # Close the pool
     pool.close()
-    return pred_results, alert_idxs, data_y_copy
+    return pred_results, alert_idxs, data_y_copy, real_jumps
 
 
 # In[5]:
